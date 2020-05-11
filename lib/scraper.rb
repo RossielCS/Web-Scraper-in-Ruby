@@ -3,18 +3,22 @@ require 'nokogiri'
 require 'rest-client'
 
 class Scraper
-  attr_accessor :job, :employer, :city, :year, :link
+  attr_accessor :form
+  attr_reader :base_salary
 
-  def initialize(job = '&', employer = '&', city = '&', year = 'All+Years')
-    @job = job
-    @employer = employer
-    @city = city
-    @year = year
+  def initialize
+    @form = ['', '', '', 'All+Years']
+    @employer = ''
+    @job_title = ''
     @base_salary = ''
+    @location = ''
+    @submit_date = ''
+    @start_date = ''
   end
 
   def create_link()
-    link = "https://h1bdata.info/index.php?em=#{@employer}job=#{@job}city=#{@city}year=#{@year}".sub(' ', '+')
+    link = "https://h1bdata.info/index.php?em=#{@form[0]}&job=#{@form[1]}&city=#{@form[2]}&year=#{@form[3]}"
+    link.gsub!(/\s/, '+')
     link
   end
 
