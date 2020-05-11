@@ -8,12 +8,6 @@ class Scraper
 
   def initialize
     @form = ['', '', '', 'All+Years']
-    @employer = ''
-    @job_title = ''
-    @base_salary = ''
-    @location = ''
-    @submit_date = ''
-    @start_date = ''
   end
 
   def create_link()
@@ -25,6 +19,29 @@ class Scraper
   def parse_url(link)
     parsed_page = Nokogiri::HTML(RestClient.get(link))
     parsed_page
-    byebug
+    # byebug
+  end
+end
+
+class Result
+  attr_accessor :employer, :job_title, :base_salary, :location, :submit_date, :start_date
+
+  def initialize
+    @employer = ''
+    @job_title = ''
+    @base_salary = ''
+    @location = ''
+    @submit_date = ''
+    @start_date = ''
+  end
+
+  def add_values(rows)
+    @employer = rows.css('td')[0].text
+    @job_title = rows.css('td')[1].text
+    @base_salary = rows.css('td')[2].text
+    @location = rows.css('td')[3].text
+    @submit_date = rows.css('td')[4].text
+    @start_date = rows.css('td')[5].text
+    # parsed_page.css('.tablesorter').css('tbody').css('tr').count
   end
 end
