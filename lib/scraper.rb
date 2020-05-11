@@ -42,6 +42,5 @@ class Result
     @location = rows.css('td')[3].text
     @submit_date = rows.css('td')[4].text
     @start_date = rows.css('td')[5].text
-    # parsed_page.css('.tablesorter').css('tbody').css('tr').count
   end
 end
