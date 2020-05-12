@@ -19,7 +19,6 @@ class Scraper
   def parse_url(link)
     parsed_page = Nokogiri::HTML(RestClient.get(link))
     parsed_page
-    # byebug
   end
 end
 
