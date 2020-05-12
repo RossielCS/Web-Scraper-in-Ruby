@@ -2,7 +2,8 @@ require_relative '../lib/scraper'
 require_relative '../lib/result'
 
 hash = { 0 => 'employer\'s name', 1 => 'job title', 2 => 'city\'s name', 3 => 'year between 2012 and 2020' }
-instructions = 'The value can be alphanumeric and have one space between words.'
+instructions = 'The value can be alphanumeric and have just one space between words.
+Using any other characters possibly will bring zero results.'
 all_results = []
 rewrite = 'Please write a valid option'
 
@@ -18,44 +19,36 @@ end
 # Calls methods depending on the value of valid_result
 def name_year(scraper, valid_result, hash, instructions)
   if valid_result < 3
-    valid_name(valid_result, scraper, hash, instructions)
+    input_name(valid_result, scraper, hash, instructions)
   else
     count = 0
     loop do
-      valid_name(count, scraper, hash, instructions)
+      input_name(count, scraper, hash, instructions)
       count += 1
       break if count == 3
     end
-    valid_year(scraper, hash)
+    input_year(scraper, hash)
   end
 end
 
-# Verify the input to save it in the instance variable form
-def valid_name(number, obj, hash, string)
-  input = ''
-  loop do
-    puts "\nWrite the #{hash[number]} or press 'enter' \n"
-    puts string
-    input = gets.strip
-    break unless input.match(/[^\w]{2,}/)
-  end
+# Saves the input in the instance variable form
+def input_name(number, obj, hash, instructions)
+  puts "\nWrite the #{hash[number]} or press 'enter' \n"
+  puts instructions
+  input = gets.strip
   obj.form[number] = input =~ /\w/ ? input : ''
 end
 
-# Verify the input to save it in the instance variable form as the year
-def valid_year(obj, hash)
-  input = ''
-  loop do
-    puts "\nWrite the #{hash[3]} or press 'enter' \n"
-    input = gets.strip
-    break if (input == '') || ((2012..2020).include? input.to_i)
-  end
-  obj.form[3] = input =~ /\w/ ? input : obj.form[3]
+# Saves the input in the instance variable form as the year
+def input_year(obj, hash)
+  puts "\nWrite the #{hash[3]} or press 'enter' \n"
+  input = gets.strip
+  obj.form[3] = input =~ /\d/ ? input : obj.form[3]
 end
 
-# Displays all the input provided for the user
+# Displays all the input provided by the user
 def display_input(scraper)
-  puts "\nGood! These are the values \n\n Employer: #{scraper.form[0]} \n Job's Title: #{scraper.form[1]}
+  puts "\nGood! These are the values \n\n Employer: #{scraper.form[0]} \n Job Title: #{scraper.form[1]}
  City: #{scraper.form[2]} \n Year: #{scraper.form[3]}"
 end
 
@@ -84,7 +77,7 @@ def display_discard(findings, url, all_results, rewrite)
   end
 end
 
-# Add values to Result instances and add then to all_results
+# Add values to Result instances and add them to all_results
 def save_results(findings, url, all_results)
   findings.times do |idx|
     obj = Result.new
