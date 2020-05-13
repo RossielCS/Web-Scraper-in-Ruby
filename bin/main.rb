@@ -6,7 +6,8 @@ hash = { 0 => 'employer\'s name', 1 => 'job title', 2 => 'city\'s name', 3 => 'y
 instructions = Paint['The value can be alphanumeric and have just one space between words.
 Using any other characters possibly will bring', :cyan] + Paint[' zero results', :magenta] + Paint[".\n", :cyan]
 all_results = []
-rewrite = Paint['Please write a valid option', :red, :bright]
+rewrite = Paint['Please write a valid option', :red]
+file_num = 0
 
 # Verify the input for the four main options
 def valid_option(number, rewrite)
@@ -58,25 +59,15 @@ def display_input(scraper)
  Paint[scraper.form[3].to_s, :magenta])
 end
 
-# Displays the values of each Result instance
-def display_values(all_results)
-  all_results.each do |x|
-    puts(Paint["\n    Employer: ", :green] + Paint[x.employer.to_s, :magenta] + Paint["\n    Job Title: ", :green] +
-    Paint[x.job_title.to_s, :magenta] + Paint["\n    Base Salary: ", :green] + Paint[x.base_salary.to_s, :magenta] +
-    Paint["\n    Location: ", :green] + Paint[x.location.to_s, :magenta] + Paint["\n    Submit Date: ", :green] +
-    Paint[x.submit_date.to_s, :magenta] + Paint["\n    Start Date: ", :green] + Paint[x.start_date.to_s, :magenta])
-  end
-end
-
 # The user selects to save the search results or to discard them
 def display_discard(findings, url, all_results, rewrite)
   loop do
     answer = gets.chomp
     if answer == 'y'
       save_results(findings, url, all_results)
-      break
+      return answer
     elsif answer == 'n'
-      all_results = []
+      all_results.clear
       break
     else
       puts rewrite
@@ -93,17 +84,59 @@ def save_results(findings, url, all_results)
   end
 end
 
+# Displays the values of each Result instance
+def display_values(all_results)
+  all_results.each_with_index do |x, y|
+    puts(Paint["\n    Result number: ", :cyan] + Paint[(y + 1).to_s, :yellow] +
+    Paint["\n    Employer: ", :green] + Paint[x.employer.to_s, :magenta] + Paint["\n    Job Title: ", :green] +
+    Paint[x.job_title.to_s, :magenta] + Paint["\n    Base Salary: ", :green] + Paint[x.base_salary.to_s, :magenta] +
+    Paint["\n    Location: ", :green] + Paint[x.location.to_s, :magenta] + Paint["\n    Submit Date: ", :green] +
+    Paint[x.submit_date.to_s, :magenta] + Paint["\n    Start Date: ", :green] + Paint[x.start_date.to_s, :magenta])
+  end
+end
+
+# Asks if the user wants to save the results
+def save_or_not(all_results, file_num)
+  puts(Paint["\n  Would you like to save the results? ", :cyan] + Paint['y', :magenta] +
+    Paint[' to save or ', :cyan] + Paint['n', :magenta] + Paint[" to not and continue.\n", :cyan])
+  loop do
+    input = gets.chomp
+    return save_search_in_file(all_results, file_num) if input == 'y'
+    break if input == 'n'
+
+    puts rewrite
+  end
+end
+
+# This method saves the results in a text file
+def save_search_in_file(all_results, file_num)
+  puts Paint["\n  I'll proceed to save the search results in a text file...", :green]
+  file_num += 1
+  file = File.new("Search Number: #{file_num}", 'w')
+  all_results.each_with_index do |x, y|
+    file.puts("\nResult number: #{y + 1}
+    Employer: #{x.employer}" + "\n    Job Title: #{x.job_title}
+    Base Salary: #{x.base_salary}" + "\n    Location: #{x.location}
+    Submit Date: #{x.submit_date}" + "\n    Start Date: #{x.start_date}")
+  end
+  file.close
+  puts(Paint['  Done! now you can access to it inside the', :green] +
+  Paint[' bin ', :magenta] + Paint['folder.', :green])
+  file_num
+end
+
 # This method closes the program or let restart the main loop
-def close_scraper(rewrite)
+def close_scraper(rewrite, all_results)
   puts(Paint["\n  Would you like to do another search? ", :cyan] + Paint['y', :magenta] +
   Paint[' to continue ', :cyan] + Paint['n', :magenta] + Paint[" to exit.\n", :cyan])
   loop do
     final = gets.chomp
     if final == 'y'
+      all_results.clear
       puts Paint["\n  Ok, let\'s start again!", :cyan]
       break
     elsif final == 'n'
-      puts "\n" + Paint['     Ok, see you later!     '.center(70, '* * '), :cyan] + "\n\n"
+      puts "\n" + Paint['     Ok, see you later!     '.center(80, '* * '), :cyan] + "\n\n"
       exit
     else
       puts rewrite
@@ -111,15 +144,17 @@ def close_scraper(rewrite)
   end
 end
 
-puts "\n\n\n" + Paint['     Welcome!     '.center(70, '* * '), :green, :bold]
+puts "\n\n\n" + Paint['     Welcome!     '.center(80, '* * '), :green, :bold]
 puts(Paint["\n With this web scraper, you can search information about the salaries for
 applicants to the United States visa H1B.\n
-  All the information it's obtained from the website H1B Salary Database ", :cyan] + Paint['h1bdata.info', :magenta] +
-  Paint['.', :cyan] + Paint["\nIn case you\'re interested in what you\'ve found here, please visit the website.
+  All the information it's obtained from the website H1B Salary Database ", :cyan] +
+  Paint["\nh1bdata.info", :magenta] + Paint['.', :cyan] +
+  Paint["\nIn case you\'re interested in what you\'ve found here, please visit the website.
   \n  To do the search it\'s necessary to apply at least one of these filters:", :cyan])
 puts Paint["\n    * Employer \n    * Job title \n    * City \n ", :magenta]
-puts Paint['  By default, the scrapper does the search including all the available years, which are
-from', :cyan] + Paint[' 2012 ', :magenta] + Paint['to', :cyan] + Paint[' 2020', :magenta] + Paint['.', :cyan]
+puts(Paint['  By default, the scrapper does the search including all the available years,
+  which are from', :cyan] + Paint[' 2012 ', :magenta] + Paint['to', :cyan] + Paint[' 2020', :magenta] +
+  Paint['.', :cyan])
 
 # Main loop
 loop do
@@ -143,9 +178,12 @@ you can choose the", :cyan] + Paint[' custom ', :magenta] +
   Paint[' results.', :green])
   if findings.positive?
     puts(Paint["\n  Do you want to display all results? ", :cyan] + Paint['y', :magenta] +
-    Paint[' to continue or ', :cyan] + Paint['n', :magenta] + Paint[" to discard them.\n", :cyan])
-    display_discard(findings, url, all_results, rewrite)
-    display_values(all_results)
+    Paint[' or ', :cyan] + Paint['n', :magenta] + Paint[" to discard and continue.\n", :cyan])
+    display = display_discard(findings, url, all_results, rewrite)
+    if display == 'y'
+      display_values(all_results)
+      file_num = save_or_not(all_results, file_num)
+    end
   end
-  close_scraper(rewrite)
+  close_scraper(rewrite, all_results)
 end
