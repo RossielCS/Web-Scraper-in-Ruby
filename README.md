@@ -5,7 +5,7 @@ I worked on this project as a requirement to finish the Ruby section in the Micr
 To test the scrapper I decided to use the [H1B Salary Database](https://h1bdata.info/index.php) website.  
 This site contains a database with the [Labor Condition Application](http://en.wikipedia.org/wiki/Labor_Condition_Application) from the [United States Department of Labor](http://www.foreignlaborcert.doleta.gov/performancedata.cfm#dis).
 
-![screenshot](https://user-images.githubusercontent.com/60085697/81740340-359f3e80-9473-11ea-9c99-fc1f238d12a1.png)
+![screenshot](https://user-images.githubusercontent.com/60085697/81875498-ca2e9d00-9556-11ea-8830-be88a432899f.png)
 
 ## :hammer: Built With
 
@@ -15,6 +15,7 @@ This site contains a database with the [Labor Condition Application](http://en.w
 - Rest-client 2.1.0,
 - Byebug 11.1.3,
 - Rspec 3.9.0,
+- Paint 2.2.0,
 - Visual Code 1.44.2
 
 ## Getting Started
@@ -38,8 +39,9 @@ You need to install:
 2. In your OS terminal search the repository's address and run `bundle install`  
 The command must install the gems required to run the program, such as:  
   [byebug](https://github.com/deivid-rodriguez/byebug)  
-  [nokogiri](https://nokogiri.org/)  
-  [rest-client](https://www.rubydoc.info/gems/rest-client/RestClient)  
+  [nokogiri](https://nokogiri.org/)
+  [paint](https://github.com/janlelis/paint)  
+  [rest-client](https://www.rubydoc.info/gems/rest-client/RestClient)   
   [rspec](https://rspec.info/)  
 
 ### :computer: Usage
@@ -60,7 +62,8 @@ If you are interested in learning how it works, here is a link to [Introduction 
 - It has an option to do a custom search.
 - Displays the input provided by the user.
 - If the search returns zero results it asks if the user wants to do another search.
-- The user can discard the results.
+- The user can save the results in a text file.
+
 
 ## :woman: Author
 
