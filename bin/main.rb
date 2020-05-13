@@ -159,9 +159,9 @@ puts(Paint['  By default, the scrapper does the search including all the availab
 # Main loop
 loop do
   puts(Paint["\n\n  Please write the number of the option.
-  In case you want to add more that one filter,
+  In case you want to apply more than one filter,
 you can choose the", :cyan] + Paint[' custom ', :magenta] +
-  Paint['option to add value to any filter, even the year.', :cyan])
+  Paint['option to add a value to any filter, even the year.', :cyan])
   puts Paint["\n    (1) Employer's Name \n    (2) Job Title \n    (3) City's Name \n    (4) Custom\n", :magenta]
   number = gets.chomp.to_i - 1
   scraper = Scraper.new

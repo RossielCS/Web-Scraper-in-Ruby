@@ -5,7 +5,7 @@ I worked on this project as a requirement to finish the Ruby section in the Micr
 To test the scrapper I decided to use the [H1B Salary Database](https://h1bdata.info/index.php) website.  
 This site contains a database with the [Labor Condition Application](http://en.wikipedia.org/wiki/Labor_Condition_Application) from the [United States Department of Labor](http://www.foreignlaborcert.doleta.gov/performancedata.cfm#dis).
 
-![screenshot](https://user-images.githubusercontent.com/60085697/81875498-ca2e9d00-9556-11ea-8830-be88a432899f.png)
+![screenshot](https://user-images.githubusercontent.com/60085697/81876386-e6cbd480-9558-11ea-8c4e-b18ecdb4425b.png)
 
 ## :hammer: Built With
 
