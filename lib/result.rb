@@ -1,5 +1,5 @@
 class Result
-  attr_accessor :employer, :job_title, :base_salary, :location, :submit_date, :start_date
+  attr_reader :employer, :job_title, :base_salary, :location, :submit_date, :start_date
 
   def initialize
     @employer = ''

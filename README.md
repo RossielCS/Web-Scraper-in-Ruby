@@ -10,7 +10,7 @@ This site contains a database with the [Labor Condition Application](http://en.w
 ## :hammer: Built With
 
 - Ruby 2.6.5,
-- Rubygems 3.0.3
+- Rubygems 3.0.3,
 - Nokogiri 1.10.9,
 - Rest-client 2.1.0,
 - Byebug 11.1.3,

@@ -4,7 +4,6 @@ require 'rest-client'
 
 class Scraper
   attr_accessor :form
-  attr_reader :base_salary
 
   def initialize
     @form = ['', '', '', 'All+Years']
