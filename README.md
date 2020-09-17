@@ -1,5 +1,5 @@
 # Web Scraper in Ruby
-> This is a scraper build in Ruby.
+> This is a scraper built in Ruby.
 I worked on this project as a requirement to finish the Ruby section in the Microverse Main Technical Curriculum.
 
 To test the scrapper I decided to use the [H1B Salary Database](https://h1bdata.info/index.php) website.  
@@ -64,7 +64,6 @@ If you are interested in learning how it works, here is a link to [Introduction 
 - If the search returns zero results it asks if the user wants to do another search.
 - The user can save the results in a text file.
 
-
 ## :woman: Author
 
 **Rossiel Carranza**
@@ -81,12 +80,6 @@ Feel free to check the [issues page](issues/).
 ## Show your support
 
 Give a ⭐️ if you like this project!
-
-## Acknowledgments
-
-- Hat tip to anyone whose code was used
-- Inspiration
-- etc
 
 ## 📝 License
 
